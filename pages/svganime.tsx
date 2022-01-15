@@ -17,24 +17,16 @@ const SVGAnime: NextPage = () => {
   }, [toggle]);
 
   let lerp = (start: number, end: number, t: number): number => {
-    return start * (1 - t) + end * t;
+    return (1-t) * start + t * end
   };
 
-  let setter = (y: number, c: number) => {
-    svgElement.current?.setAttribute(
-      "d",
-      `M 0 ${y} L 0 100 100 100 100 ${y} C 50 ${c}, 50 ${c}, 0 ${y}`
-    );
-  };
   let animate = () => {
     if (!toggle) {
       y = +lerp(y, 100, 0.075).toFixed(2);
-      c = +lerp(c, 100, 0.015).toFixed(2);
-      // console.log('LERP 1', y);
+      c = +lerp(c, 100, 0.005).toFixed(2);
     } else {
       y = +lerp(y, 0, 0.05).toFixed(2);
       c = +lerp(c, 0, 0.15).toFixed(2);
-      // console.log('LERP 2', y);
     }
     svgElement.current?.setAttribute(
       "d",
@@ -48,14 +40,14 @@ const SVGAnime: NextPage = () => {
   let handleAnime = () => {
     setTimeout(() => {
       setToggle(!toggle);
-    }, 300);
+    }, 200);
 
     if (toggle) {
       ul_elem.current?.classList.remove("active");
     } else {
       setTimeout(() => {
         ul_elem.current?.classList.add("active");
-      }, 400);
+      }, 300);
     }
     menuToggle.current?.classList.toggle("active");
   };
